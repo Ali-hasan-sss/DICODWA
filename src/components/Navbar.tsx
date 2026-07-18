@@ -20,6 +20,24 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
   const switchLocale = () => {
     const next = locale === "en" ? "ar" : "en";
     router.replace(pathname, { locale: next });
@@ -64,6 +82,7 @@ export function Navbar() {
             type="button"
             className={`nav-toggle ${open ? "active" : ""}`}
             aria-label="Toggle navigation"
+            aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
           >
             <span />
