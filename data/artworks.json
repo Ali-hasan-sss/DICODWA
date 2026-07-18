@@ -1,0 +1,123 @@
+[
+  {
+    "id": "aw-001",
+    "title": {
+      "en": "Golden Horizon",
+      "ar": "أفق ذهبي"
+    },
+    "description": {
+      "en": "An abstract landscape exploring warm golds and deep shadows — a statement piece for modern interiors.",
+      "ar": "منظر تجريدي يستكشف الذهبيات الدافئة والظلال العميقة — قطعة مميزة للمساحات العصرية."
+    },
+    "price": 450,
+    "currency": "usd",
+    "image": "/images/parallax-bg-01.jpg",
+    "media": [
+      { "type": "image", "src": "/images/parallax-bg-01.jpg" },
+      { "type": "image", "src": "/images/parallax-bg-02.jpg" },
+      { "type": "image", "src": "/images/parallax-bg-03.jpg" },
+      {
+        "type": "video",
+        "src": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+        "poster": "/images/parallax-bg-01.jpg"
+      }
+    ],
+    "medium": {
+      "en": "Acrylic on canvas",
+      "ar": "أكريليك على قماش"
+    },
+    "dimensions": "60 × 80 cm",
+    "year": 2025,
+    "status": "available",
+    "featured": true,
+    "createdAt": "2025-01-15T10:00:00.000Z"
+  },
+  {
+    "id": "aw-002",
+    "title": {
+      "en": "Silent Geometry",
+      "ar": "هندسة صامتة"
+    },
+    "description": {
+      "en": "Layered geometric forms in muted tones, inspired by architectural rhythm and quiet balance.",
+      "ar": "أشكال هندسية متراكبة بألوان هادئة، مستوحاة من إيقاع العمارة والتوازن الهادئ."
+    },
+    "price": 380,
+    "currency": "usd",
+    "image": "/images/parallax-bg-02.jpg",
+    "media": [
+      { "type": "image", "src": "/images/parallax-bg-02.jpg" },
+      { "type": "image", "src": "/images/parallax-bg-04.jpg" },
+      { "type": "image", "src": "/images/parallax-bg-01.jpg" }
+    ],
+    "medium": {
+      "en": "Mixed media on canvas",
+      "ar": "وسائط متعددة على قماش"
+    },
+    "dimensions": "50 × 70 cm",
+    "year": 2025,
+    "status": "available",
+    "featured": true,
+    "createdAt": "2025-02-01T10:00:00.000Z"
+  },
+  {
+    "id": "aw-003",
+    "title": {
+      "en": "Velvet Night",
+      "ar": "ليل مخملي"
+    },
+    "description": {
+      "en": "Deep indigo and soft gold accents evoke a night sky — intimate, rich, and contemplative.",
+      "ar": "نيلي عميق ولمسات ذهبية ناعمة تستحضر سماء الليل — حميمة وغنية وتأملية."
+    },
+    "price": 520,
+    "currency": "usd",
+    "image": "/images/parallax-bg-03.jpg",
+    "media": [
+      { "type": "image", "src": "/images/parallax-bg-03.jpg" },
+      { "type": "image", "src": "/images/parallax-bg-01.jpg" },
+      {
+        "type": "video",
+        "src": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+        "poster": "/images/parallax-bg-03.jpg"
+      }
+    ],
+    "medium": {
+      "en": "Oil on canvas",
+      "ar": "زيت على قماش"
+    },
+    "dimensions": "70 × 90 cm",
+    "year": 2024,
+    "status": "available",
+    "featured": false,
+    "createdAt": "2024-11-20T10:00:00.000Z"
+  },
+  {
+    "id": "aw-004",
+    "title": {
+      "en": "Desert Bloom",
+      "ar": "زهرة الصحراء"
+    },
+    "description": {
+      "en": "Warm earth pigments and delicate floral motifs celebrating resilience and beauty in arid places.",
+      "ar": "صبغات ترابية دافئة وزخارف نباتية رقيقة تحتفي بالصمود والجمال في الأماكن القاحلة."
+    },
+    "price": 410,
+    "currency": "usd",
+    "image": "/images/parallax-bg-04.jpg",
+    "media": [
+      { "type": "image", "src": "/images/parallax-bg-04.jpg" },
+      { "type": "image", "src": "/images/parallax-bg-02.jpg" },
+      { "type": "image", "src": "/images/parallax-bg-03.jpg" }
+    ],
+    "medium": {
+      "en": "Acrylic & ink on canvas",
+      "ar": "أكريليك وحبر على قماش"
+    },
+    "dimensions": "55 × 75 cm",
+    "year": 2025,
+    "status": "available",
+    "featured": true,
+    "createdAt": "2025-03-10T10:00:00.000Z"
+  }
+]
