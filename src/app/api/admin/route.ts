@@ -5,7 +5,8 @@ import {
   isAdminAuthenticated,
   verifyPassword,
 } from "@/lib/auth";
-import { getArtworks, getMessages, getOrders } from "@/lib/store";
+import { getEditableCopy } from "@/lib/content";
+import { getArtworks, getMessages, getOrders, getSiteSettings } from "@/lib/store";
 
 export async function POST(request: Request) {
   const body = await request.json();
@@ -37,10 +38,12 @@ export async function GET() {
     return NextResponse.json({ authenticated: false }, { status: 401 });
   }
 
-  const [artworks, orders, messages] = await Promise.all([
+  const [artworks, orders, messages, site, copy] = await Promise.all([
     getArtworks(),
     getOrders(),
     getMessages(),
+    getSiteSettings(),
+    getEditableCopy(),
   ]);
 
   return NextResponse.json({
@@ -48,5 +51,7 @@ export async function GET() {
     artworks,
     orders,
     messages,
+    site,
+    copy,
   });
 }

@@ -14,7 +14,7 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 80);
+    const onScroll = () => setScrolled(window.scrollY > 12);
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
@@ -43,6 +43,9 @@ export function Navbar() {
     router.replace(pathname, { locale: next });
   };
 
+  const onHome = pathname === "/";
+  const solid = scrolled || !onHome || open;
+
   const navItems = [
     { href: "/#home", label: t("home") },
     { href: "/#about", label: t("about") },
@@ -50,8 +53,10 @@ export function Navbar() {
     { href: "/#contact", label: t("contact") },
   ];
 
+  const langLabel = locale === "en" ? "العربية" : "EN";
+
   return (
-    <nav className={`site-nav ${scrolled ? "scrolled" : ""}`}>
+    <header className={`site-nav ${solid ? "solid" : "overlay"}`}>
       <div className="nav-container">
         <Link href="/" className="nav-logo" onClick={() => setOpen(false)}>
           <Image
@@ -61,7 +66,6 @@ export function Navbar() {
             height={160}
             priority
           />
-          <span className="nav-logo-text">DICODWA</span>
         </Link>
 
         <ul className={`nav-links ${open ? "open" : ""}`}>
@@ -76,12 +80,12 @@ export function Navbar() {
 
         <div className="nav-actions">
           <button type="button" className="lang-switch" onClick={switchLocale}>
-            {locale === "en" ? "العربية" : "EN"}
+            {langLabel}
           </button>
           <button
             type="button"
             className={`nav-toggle ${open ? "active" : ""}`}
-            aria-label="Toggle navigation"
+            aria-label={t("menu")}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
           >
@@ -91,6 +95,6 @@ export function Navbar() {
           </button>
         </div>
       </div>
-    </nav>
+    </header>
   );
 }

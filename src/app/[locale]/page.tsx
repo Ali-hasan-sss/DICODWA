@@ -4,7 +4,42 @@ import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { ArtworkGrid } from "@/components/ArtworkGrid";
 import { ContactForm } from "@/components/ContactForm";
-import { getArtworks } from "@/lib/store";
+import { HeroStage } from "@/components/HeroStage";
+import { SectionBackdrop } from "@/components/SectionBackdrop";
+import { heroScrim } from "@/lib/backgrounds";
+import { getArtworks, getSiteSettings } from "@/lib/store";
+import type { SectionBackground, SectionId } from "@/lib/types";
+
+function withLocale(href: string, locale: string) {
+  if (
+    href.startsWith("/") &&
+    !href.startsWith("/en") &&
+    !href.startsWith("/ar") &&
+    !href.startsWith("/api") &&
+    !href.startsWith("/uploads") &&
+    !href.startsWith("/images") &&
+    !href.startsWith("/_next")
+  ) {
+    return `/${locale}${href}`;
+  }
+  return href;
+}
+
+function sectionBackground(
+  backgrounds: SectionBackground[],
+  id: SectionId
+): SectionBackground {
+  return (
+    backgrounds.find((item) => item.id === id) || {
+      id,
+      video: "",
+      image: "",
+      poster: "",
+      overlayColor: "#000000",
+      overlayOpacity: 50,
+    }
+  );
+}
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -24,49 +59,43 @@ export default async function HomePage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale });
-  const artworks = await getArtworks();
+  const [artworks, site] = await Promise.all([
+    getArtworks(),
+    getSiteSettings(),
+  ]);
   const featured = artworks.filter((a) => a.featured).length
     ? artworks.filter((a) => a.featured)
     : artworks;
+  const lang = locale === "ar" ? "ar" : "en";
+  const heroSlides = site.heroSlides.map((slide) => ({
+    id: slide.id,
+    video: slide.video,
+    poster: slide.poster,
+    title: slide.title[lang],
+    subtitle: slide.subtitle[lang],
+    buttons: slide.buttons
+      .filter((button) => button.label[lang].trim() && button.href)
+      .map((button) => ({
+        label: button.label[lang],
+        href: withLocale(button.href, locale),
+      })),
+  }));
 
   return (
     <>
-      <section id="home" className="parallax-section" data-motion="hero">
-        <div
-          className="parallax-bg"
-          data-speed="0.5"
-          style={{ backgroundImage: "url('/images/parallax-bg-01.jpg')" }}
-        />
-        <div className="parallax-overlay" />
-        <div className="section-content">
-          <div className="hero-brand" data-reveal="bloom" data-delay="0">
-            <Image
-              src="/images/logo.png"
-              alt="DICODWA"
-              width={280}
-              height={280}
-              priority
-            />
-          </div>
-          <h1 className="section-title hero-title" data-reveal="title" data-delay="1">
-            DICODWA
-          </h1>
-          <p className="section-subtitle" data-reveal="fade-up" data-delay="2">
-            {t("hero.subtitle")}
-          </p>
-          <a href="#gallery" className="btn-primary" data-reveal="fade-up" data-delay="3">
-            {t("hero.cta")}
-          </a>
-        </div>
-      </section>
+      <HeroStage
+        slides={heroSlides}
+        muteLabel={t("hero.mute")}
+        unmuteLabel={t("hero.unmute")}
+        playLabel={t("hero.play")}
+        prevLabel={t("hero.previous")}
+        nextLabel={t("hero.next")}
+        slideLabel={t.raw("hero.slide")}
+        scrim={heroScrim(sectionBackground(site.backgrounds, "hero"))}
+      />
 
-      <section id="about" className="parallax-section" data-motion="about">
-        <div
-          className="parallax-bg"
-          data-speed="0.45"
-          style={{ backgroundImage: "url('/images/parallax-bg-02.jpg')" }}
-        />
-        <div className="parallax-overlay" />
+      <section id="about" className="parallax-section home-block" data-motion="about">
+        <SectionBackdrop background={sectionBackground(site.backgrounds, "about")} speed="0.45" />
         <div className="section-content">
           <h2 className="section-title" data-reveal="title" data-delay="0">
             {t("about.title")}
@@ -76,7 +105,7 @@ export default async function HomePage({ params }: Props) {
               <div className="about-thumb-wide">
                 <Image
                   src="/images/about-01.jpg"
-                  alt="DICODWA studio"
+                  alt={t("about.alt1")}
                   width={400}
                   height={200}
                 />
@@ -88,7 +117,7 @@ export default async function HomePage({ params }: Props) {
               <div className="about-thumb-wide">
                 <Image
                   src="/images/about-02.jpg"
-                  alt="Artwork process"
+                  alt={t("about.alt2")}
                   width={400}
                   height={200}
                 />
@@ -99,13 +128,8 @@ export default async function HomePage({ params }: Props) {
         </div>
       </section>
 
-      <section id="gallery" className="parallax-section" data-motion="gallery">
-        <div
-          className="parallax-bg"
-          data-speed="0.5"
-          style={{ backgroundImage: "url('/images/parallax-bg-04.jpg')" }}
-        />
-        <div className="parallax-overlay overlay-dark" />
+      <section id="gallery" className="parallax-section home-block" data-motion="gallery">
+        <SectionBackdrop background={sectionBackground(site.backgrounds, "homeGallery")} />
         <div className="section-content">
           <h2 className="section-title" data-reveal="title" data-delay="0">
             {t("gallery.title")}
@@ -115,20 +139,15 @@ export default async function HomePage({ params }: Props) {
           </p>
           <ArtworkGrid artworks={featured} limit={6} />
           <div style={{ marginTop: 40 }} data-reveal="fade-up" data-delay="4">
-            <Link href="/gallery" className="btn-primary">
+            <Link href="/gallery" className="btn-pill">
               {t("gallery.viewAll")}
             </Link>
           </div>
         </div>
       </section>
 
-      <section id="contact" className="parallax-section" data-motion="contact">
-        <div
-          className="parallax-bg"
-          data-speed="0.5"
-          style={{ backgroundImage: "url('/images/parallax-bg-05.jpg')" }}
-        />
-        <div className="parallax-overlay overlay-medium" />
+      <section id="contact" className="parallax-section home-block" data-motion="contact">
+        <SectionBackdrop background={sectionBackground(site.backgrounds, "contact")} />
         <div className="section-content">
           <h2 className="section-title" data-reveal="title" data-delay="0">
             {t("contact.title")}

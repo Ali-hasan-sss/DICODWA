@@ -2,8 +2,11 @@
 
 import { FormEvent, useCallback, useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import type { Artwork, ContactMessage, Order } from "@/lib/types";
+import type { Artwork, ContactMessage, HeroSlide, LocaleCopy, Order, SectionBackground } from "@/lib/types";
 import { buildArtworkMedia, mediaToFormFields } from "@/lib/artwork-media";
+import { BackgroundsEditor } from "@/components/admin/BackgroundsEditor";
+import { HeroSlidesEditor } from "@/components/admin/HeroSlidesEditor";
+import { SiteCopyEditor } from "@/components/admin/SiteCopyEditor";
 
 const emptyForm = {
   id: "",
@@ -30,12 +33,17 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(true);
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
-  const [tab, setTab] = useState<"artworks" | "orders" | "messages">("artworks");
+  const [tab, setTab] = useState<
+    "hero" | "backgrounds" | "texts" | "artworks" | "orders" | "messages"
+  >("hero");
   const [artworks, setArtworks] = useState<Artwork[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
   const [messages, setMessages] = useState<ContactMessage[]>([]);
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
+  const [heroSlides, setHeroSlides] = useState<HeroSlide[]>([]);
+  const [backgrounds, setBackgrounds] = useState<SectionBackground[]>([]);
+  const [copy, setCopy] = useState<LocaleCopy | null>(null);
 
   const loadData = useCallback(async () => {
     const res = await fetch("/api/admin");
@@ -49,6 +57,9 @@ export default function AdminPage() {
     setArtworks(data.artworks || []);
     setOrders(data.orders || []);
     setMessages(data.messages || []);
+    setHeroSlides(data.site?.heroSlides || []);
+    setBackgrounds(data.site?.backgrounds || []);
+    setCopy(data.copy || null);
     setLoading(false);
   }, []);
 
@@ -199,6 +210,27 @@ export default function AdminPage() {
       <div className="admin-tabs">
         <button
           type="button"
+          className={tab === "hero" ? "active" : ""}
+          onClick={() => setTab("hero")}
+        >
+          {t("hero")}
+        </button>
+        <button
+          type="button"
+          className={tab === "backgrounds" ? "active" : ""}
+          onClick={() => setTab("backgrounds")}
+        >
+          {t("backgrounds")}
+        </button>
+        <button
+          type="button"
+          className={tab === "texts" ? "active" : ""}
+          onClick={() => setTab("texts")}
+        >
+          {t("texts")}
+        </button>
+        <button
+          type="button"
           className={tab === "artworks" ? "active" : ""}
           onClick={() => setTab("artworks")}
         >
@@ -219,6 +251,16 @@ export default function AdminPage() {
           {t("messages")}
         </button>
       </div>
+
+      {tab === "hero" && heroSlides.length > 0 && (
+        <HeroSlidesEditor key={heroSlides.map((slide) => slide.id).join("-")} initialSlides={heroSlides} />
+      )}
+
+      {tab === "backgrounds" && backgrounds.length > 0 && (
+        <BackgroundsEditor initialBackgrounds={backgrounds} />
+      )}
+
+      {tab === "texts" && copy && <SiteCopyEditor key={locale} initialCopy={copy} />}
 
       {tab === "artworks" && (
         <>

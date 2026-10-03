@@ -1,6 +1,8 @@
 import { promises as fs } from "fs";
 import path from "path";
-import type { Artwork, ContactMessage, Order } from "./types";
+import { normalizeBackgrounds } from "./backgrounds";
+import { normalizeSlides } from "./hero-slides";
+import type { Artwork, ContactMessage, Order, SiteSettings } from "./types";
 
 const dataDir = path.join(process.cwd(), "data");
 
@@ -95,4 +97,25 @@ export async function createMessage(
   messages.unshift(message);
   await writeJson("messages.json", messages);
   return message;
+}
+
+export async function getSiteSettings(): Promise<SiteSettings> {
+  try {
+    const data = await readJson<Parameters<typeof normalizeSlides>[0] & { backgrounds?: unknown }>(
+      "site.json"
+    );
+    return {
+      heroSlides: normalizeSlides(data),
+      backgrounds: normalizeBackgrounds(data.backgrounds),
+    };
+  } catch {
+    return {
+      heroSlides: normalizeSlides(null),
+      backgrounds: normalizeBackgrounds(null),
+    };
+  }
+}
+
+export async function saveSiteSettings(settings: SiteSettings): Promise<void> {
+  await writeJson("site.json", settings);
 }

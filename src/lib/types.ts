@@ -54,3 +54,45 @@ export type ContactMessage = {
   message: string;
   createdAt: string;
 };
+
+export type HeroButton = {
+  label: LocalizedString;
+  href: string;
+};
+
+export type HeroSlide = {
+  id: string;
+  video: string;
+  poster: string;
+  title: LocalizedString;
+  subtitle: LocalizedString;
+  buttons: HeroButton[];
+};
+
+export type SectionId = "hero" | "about" | "homeGallery" | "contact" | "gallery";
+
+export type SectionBackground = {
+  id: SectionId;
+  /** Looping background video. Empty keeps the still image. */
+  video: string;
+  image: string;
+  poster: string;
+  /** Hex color of the tint over the background. */
+  overlayColor: string;
+  /** Tint strength from 0 to 100. */
+  overlayOpacity: number;
+};
+
+export type SiteSettings = {
+  heroSlides: HeroSlide[];
+  backgrounds: SectionBackground[];
+};
+
+export type MessageTree = {
+  [key: string]: string | MessageTree;
+};
+
+export type LocaleCopy = {
+  en: MessageTree;
+  ar: MessageTree;
+};

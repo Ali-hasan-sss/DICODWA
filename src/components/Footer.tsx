@@ -45,38 +45,68 @@ function SocialIcon({ id }: { id: (typeof socialLinks)[number]["id"] }) {
 
 export function Footer() {
   const t = useTranslations("footer");
+  const nav = useTranslations("nav");
   const year = new Date().getFullYear();
 
   return (
     <footer className="site-footer">
-      <p className="script">By DeemaW Ali</p>
+      <div className="footer-grid">
+        <div>
+          <p className="footer-col-title">{t("brand")}</p>
+          <p className="script">{t("script")}</p>
+          <p className="footer-brand-note">{t("by")}</p>
+        </div>
 
-      <div className="footer-social" aria-label={t("social")}>
-        {socialLinks.map((item) => (
-          <a
-            key={item.id}
-            href={item.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="footer-social-link"
-            aria-label={item.label}
-          >
-            <SocialIcon id={item.id} />
-          </a>
-        ))}
+        <nav className="footer-col" aria-label={nav("home")}>
+          <p className="footer-col-title">{nav("home")}</p>
+          <div className="footer-col-links">
+            <Link href="/#home">{nav("home")}</Link>
+            <Link href="/#about">{nav("about")}</Link>
+            <Link href="/gallery">{nav("gallery")}</Link>
+            <Link href="/#contact">{nav("contact")}</Link>
+          </div>
+        </nav>
+
+        <nav className="footer-col" aria-label={t("legal")}>
+          <p className="footer-col-title">{t("legal")}</p>
+          <div className="footer-col-links">
+            <Link href="/privacy">{t("privacy")}</Link>
+            <Link href="/terms">{t("terms")}</Link>
+          </div>
+        </nav>
+
+        <div className="footer-col">
+          <p className="footer-col-title">{t("social")}</p>
+          <div className="footer-social">
+            {socialLinks.map((item) => (
+              <a
+                key={item.id}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-social-link"
+                aria-label={
+                  item.id === "instagram"
+                    ? t("instagram")
+                    : item.id === "facebook"
+                      ? t("facebook")
+                      : item.id === "tiktok"
+                        ? t("tiktok")
+                        : t("x")
+                }
+              >
+                <SocialIcon id={item.id} />
+              </a>
+            ))}
+          </div>
+        </div>
       </div>
 
-      <nav className="footer-links" aria-label={t("legal")}>
-        <Link href="/privacy">{t("privacy")}</Link>
-        <span className="footer-sep" aria-hidden>
-          ·
-        </span>
-        <Link href="/terms">{t("terms")}</Link>
-      </nav>
-
-      <p className="footer-copy">
-        © {year} DICODWA. {t("rights")}
-      </p>
+      <div className="footer-bottom">
+        <p className="footer-copy">
+          © {year} {t("brand")}. {t("rights")}
+        </p>
+      </div>
     </footer>
   );
 }

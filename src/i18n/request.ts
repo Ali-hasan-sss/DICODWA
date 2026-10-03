@@ -7,8 +7,16 @@ export default getRequestConfig(async ({ requestLocale }) => {
     locale = routing.defaultLocale;
   }
 
+  const safeLocale = locale === "ar" ? "ar" : "en";
+  const messages = (await import(`../../messages/${safeLocale}.json`)).default;
+
+  if (process.env.NEXT_RUNTIME === "edge") {
+    return { locale: safeLocale, messages };
+  }
+
+  const { getLocaleMessages } = await import("@/lib/content");
   return {
-    locale,
-    messages: (await import(`../../messages/${locale}.json`)).default,
+    locale: safeLocale,
+    messages: await getLocaleMessages(safeLocale),
   };
 });

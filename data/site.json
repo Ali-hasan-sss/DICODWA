@@ -1,0 +1,75 @@
+{
+  "heroSlides": [
+    {
+      "id": "slide-default",
+      "video": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+      "poster": "",
+      "title": {
+        "en": "DICODWA",
+        "ar": "ديكودوا"
+      },
+      "subtitle": {
+        "en": "Decorative Pieces & More by DeemaW Ali",
+        "ar": "قطع ديكور والمزيد — بإبداع ديما علي"
+      },
+      "buttons": [
+        {
+          "label": {
+            "en": "Explore Gallery",
+            "ar": "استكشف المعرض"
+          },
+          "href": "#gallery"
+        },
+        {
+          "label": {
+            "en": "About Us",
+            "ar": "من نحن"
+          },
+          "href": "#about"
+        }
+      ]
+    }
+  ],
+  "backgrounds": [
+    {
+      "id": "hero",
+      "video": "",
+      "image": "",
+      "poster": "",
+      "overlayColor": "#000000",
+      "overlayOpacity": 72
+    },
+    {
+      "id": "about",
+      "video": "",
+      "image": "/images/parallax-bg-02.jpg",
+      "poster": "",
+      "overlayColor": "#000000",
+      "overlayOpacity": 50
+    },
+    {
+      "id": "homeGallery",
+      "video": "",
+      "image": "/images/parallax-bg-04.jpg",
+      "poster": "",
+      "overlayColor": "#000000",
+      "overlayOpacity": 62
+    },
+    {
+      "id": "contact",
+      "video": "",
+      "image": "/images/parallax-bg-05.jpg",
+      "poster": "",
+      "overlayColor": "#000000",
+      "overlayOpacity": 55
+    },
+    {
+      "id": "gallery",
+      "video": "",
+      "image": "/images/parallax-bg-03.jpg",
+      "poster": "",
+      "overlayColor": "#000000",
+      "overlayOpacity": 62
+    }
+  ]
+}

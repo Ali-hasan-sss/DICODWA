@@ -1,0 +1,218 @@
+{
+  "en": {
+    "meta": {
+      "title": "DICODWA — Decorative Pieces & More",
+      "description": "Original artworks and decorative pieces by DeemaW Ali. Browse and purchase unique paintings."
+    },
+    "nav": {
+      "home": "Home",
+      "about": "About Us",
+      "gallery": "Gallery",
+      "contact": "Contact",
+      "admin": "Admin",
+      "menu": "Open menu"
+    },
+    "hero": {
+      "mute": "Mute video",
+      "unmute": "Unmute video",
+      "play": "Play video",
+      "previous": "Previous slide",
+      "next": "Next slide",
+      "slide": "Slide {n}"
+    },
+    "about": {
+      "title": "About Us",
+      "alt1": "DICODWA studio",
+      "alt2": "Artwork process",
+      "p1": "DICODWA is the artistic world of DeemaW Ali — a space where decorative pieces and original paintings meet craftsmanship and emotion.",
+      "p2": "Each artwork is created with care, blending contemporary aesthetics with personal storytelling. From statement canvases to intimate decorative pieces, every work is designed to transform the spaces we live in.",
+      "p3": "Explore the collection, find a piece that speaks to you, and bring original art into your home."
+    },
+    "gallery": {
+      "title": "Gallery",
+      "subtitle": "Original paintings available for purchase",
+      "viewAll": "View all artworks",
+      "sold": "Sold",
+      "available": "Available",
+      "buy": "Buy now",
+      "details": "View details",
+      "price": "Price",
+      "dimensions": "Dimensions",
+      "medium": "Medium",
+      "year": "Year",
+      "back": "Back to gallery",
+      "empty": "No artworks available yet. Please check back soon.",
+      "currency": "USD",
+      "openFullscreen": "Open fullscreen",
+      "clickToExpand": "Click to expand",
+      "fullscreen": "Fullscreen gallery",
+      "close": "Close",
+      "previous": "Previous",
+      "next": "Next",
+      "imageThumb": "Image {n}",
+      "videoThumb": "Video {n}"
+    },
+    "contact": {
+      "title": "Get in Touch",
+      "subtitle": "Commissions, inquiries, and collaborations",
+      "name": "Your name",
+      "email": "Your email",
+      "message": "Your message",
+      "send": "Send message",
+      "success": "Thank you! Your message has been sent.",
+      "error": "Something went wrong. Please try again."
+    },
+    "checkout": {
+      "successTitle": "Payment successful",
+      "successMessage": "Thank you for your purchase. You will receive a confirmation email shortly.",
+      "cancelTitle": "Payment cancelled",
+      "cancelMessage": "Your payment was cancelled. The artwork is still available if you wish to try again.",
+      "backHome": "Back to home"
+    },
+    "footer": {
+      "rights": "All rights reserved.",
+      "brand": "DICODWA",
+      "script": "By DeemaW Ali",
+      "by": "By DeemaW Ali",
+      "social": "Social media",
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "tiktok": "TikTok",
+      "x": "X",
+      "legal": "Legal",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Use"
+    },
+    "legal": {
+      "backHome": "Back to home",
+      "privacyTitle": "Privacy Policy",
+      "privacyIntro": "DICODWA respects your privacy. This policy explains how we collect and use information when you browse the site, contact us, or purchase an artwork.",
+      "privacyCollectTitle": "Information we collect",
+      "privacyCollect": "We may collect your name, email address, and message content when you use the contact form, as well as order and payment-related details needed to complete a purchase (processed securely via our payment provider).",
+      "privacyUseTitle": "How we use information",
+      "privacyUse": "We use your information to respond to inquiries, fulfill orders, send purchase confirmations, and improve the website experience. We do not sell your personal data.",
+      "privacyShareTitle": "Sharing",
+      "privacyShare": "Payment details are handled by Stripe. We may share limited information with service providers strictly as needed to operate the site and process orders.",
+      "privacyContactTitle": "Contact",
+      "privacyContact": "For privacy questions, please reach out through the contact form on this website.",
+      "termsTitle": "Terms of Use",
+      "termsIntro": "By using the DICODWA website you agree to these terms. Please read them carefully before browsing or purchasing.",
+      "termsArtworksTitle": "Artworks",
+      "termsArtworks": "Each artwork listing describes the piece as accurately as possible. Colors may vary slightly depending on your screen. Availability may change without notice until an order is confirmed.",
+      "termsOrdersTitle": "Orders & payments",
+      "termsOrders": "Orders are processed through Stripe. A sale is confirmed after successful payment. If an item becomes unavailable after payment, we will contact you to arrange a resolution.",
+      "termsIpTitle": "Intellectual property",
+      "termsIp": "All images, texts, and designs on this site belong to DICODWA / DeemaW Ali unless otherwise stated. You may not reproduce or redistribute them without permission.",
+      "termsContactTitle": "Contact",
+      "termsContact": "Questions about these terms can be sent through the contact form on this website."
+    }
+  },
+  "ar": {
+    "meta": {
+      "title": "ديكودوا — قطع ديكور والمزيد",
+      "description": "أعمال فنية أصلية وقطع ديكور من إبداع ديما علي. تصفّح واشترِ لوحات فريدة."
+    },
+    "nav": {
+      "home": "الرئيسية",
+      "about": "من نحن",
+      "gallery": "المعرض",
+      "contact": "تواصل",
+      "admin": "الإدارة",
+      "menu": "فتح القائمة"
+    },
+    "hero": {
+      "mute": "كتم الصوت",
+      "unmute": "تشغيل الصوت",
+      "play": "تشغيل الفيديو",
+      "previous": "الشريحة السابقة",
+      "next": "الشريحة التالية",
+      "slide": "الشريحة {n}"
+    },
+    "about": {
+      "title": "من نحن",
+      "alt1": "استوديو ديكودوا",
+      "alt2": "تفاصيل العمل الفني",
+      "p1": "ديكودوا هو عالم ديما علي الفني — مساحة تلتقي فيها قطع الديكور واللوحات الأصلية بالحِرفة والإحساس.",
+      "p2": "كل عمل يُصنع بعناية، ويمزج بين الجماليات المعاصرة والسرد الشخصي. من اللوحات الكبيرة إلى القطع الحميمة، كل عمل مصمم ليحوّل المساحات التي نعيش فيها.",
+      "p3": "استكشف المجموعة، واعثر على القطعة التي تلامسك، وأحضر فناً أصلياً إلى منزلك."
+    },
+    "gallery": {
+      "title": "المعرض",
+      "subtitle": "لوحات أصلية متاحة للشراء",
+      "viewAll": "عرض كل الأعمال",
+      "sold": "مباع",
+      "available": "متاح",
+      "buy": "اشترِ الآن",
+      "details": "التفاصيل",
+      "price": "السعر",
+      "dimensions": "الأبعاد",
+      "medium": "الخامة",
+      "year": "السنة",
+      "back": "العودة للمعرض",
+      "empty": "لا توجد أعمال متاحة حالياً. نرجو العودة لاحقاً.",
+      "currency": "دولار",
+      "openFullscreen": "فتح بملء الشاشة",
+      "clickToExpand": "انقر للتكبير",
+      "fullscreen": "معرض ملء الشاشة",
+      "close": "إغلاق",
+      "previous": "السابق",
+      "next": "التالي",
+      "imageThumb": "صورة {n}",
+      "videoThumb": "فيديو {n}"
+    },
+    "contact": {
+      "title": "تواصل معنا",
+      "subtitle": "طلبات خاصة واستفسارات وتعاون",
+      "name": "الاسم",
+      "email": "البريد الإلكتروني",
+      "message": "رسالتك",
+      "send": "إرسال",
+      "success": "شكراً لك! تم إرسال رسالتك.",
+      "error": "حدث خطأ. يرجى المحاولة مرة أخرى."
+    },
+    "checkout": {
+      "successTitle": "تم الدفع بنجاح",
+      "successMessage": "شكراً لشرائك. ستصلك رسالة تأكيد قريباً.",
+      "cancelTitle": "تم إلغاء الدفع",
+      "cancelMessage": "تم إلغاء الدفع. العمل لا يزال متاحاً إن رغبت بالمحاولة مجدداً.",
+      "backHome": "العودة للرئيسية"
+    },
+    "footer": {
+      "rights": "جميع الحقوق محفوظة.",
+      "brand": "DICODWA",
+      "script": "By DeemaW Ali",
+      "by": "بإبداع ديما علي",
+      "social": "وسائل التواصل",
+      "instagram": "إنستغرام",
+      "facebook": "فيسبوك",
+      "tiktok": "تيك توك",
+      "x": "إكس",
+      "legal": "قانوني",
+      "privacy": "سياسة الخصوصية",
+      "terms": "شروط الاستخدام"
+    },
+    "legal": {
+      "backHome": "العودة للرئيسية",
+      "privacyTitle": "سياسة الخصوصية",
+      "privacyIntro": "تحترم ديكودوا خصوصيتك. توضح هذه السياسة كيف نجمع المعلومات ونستخدمها عند تصفح الموقع أو التواصل معنا أو شراء عمل فني.",
+      "privacyCollectTitle": "المعلومات التي نجمعها",
+      "privacyCollect": "قد نجمع اسمك وبريدك الإلكتروني ومحتوى رسالتك عند استخدام نموذج التواصل، بالإضافة إلى بيانات الطلب والدفع اللازمة لإتمام الشراء (تُعالَج بشكل آمن عبر مزوّد الدفع).",
+      "privacyUseTitle": "كيف نستخدم المعلومات",
+      "privacyUse": "نستخدم معلوماتك للرد على الاستفسارات، وتنفيذ الطلبات، وإرسال تأكيدات الشراء، وتحسين تجربة الموقع. نحن لا نبيع بياناتك الشخصية.",
+      "privacyShareTitle": "المشاركة",
+      "privacyShare": "تُعالَج تفاصيل الدفع عبر Stripe. قد نشارك معلومات محدودة مع مزوّدي الخدمات بالقدر اللازم فقط لتشغيل الموقع ومعالجة الطلبات.",
+      "privacyContactTitle": "التواصل",
+      "privacyContact": "لأي أسئلة تتعلق بالخصوصية، يرجى التواصل عبر نموذج الاتصال في هذا الموقع.",
+      "termsTitle": "شروط الاستخدام",
+      "termsIntro": "باستخدامك موقع ديكودوا فإنك توافق على هذه الشروط. يرجى قراءتها بعناية قبل التصفح أو الشراء.",
+      "termsArtworksTitle": "الأعمال الفنية",
+      "termsArtworks": "كل عرض عمل يصف القطعة بأكبر قدر ممكن من الدقة. قد تختلف الألوان قليلاً حسب شاشتك. وقد تتغير التوافر دون إشعار حتى يتم تأكيد الطلب.",
+      "termsOrdersTitle": "الطلبات والدفع",
+      "termsOrders": "تُعالَج الطلبات عبر Stripe. يُؤكَّد البيع بعد نجاح الدفع. إذا أصبح العمل غير متاح بعد الدفع، سنتواصل معك لترتيب حل مناسب.",
+      "termsIpTitle": "الملكية الفكرية",
+      "termsIp": "جميع الصور والنصوص والتصاميم في هذا الموقع ملك لـ ديكودوا / ديما علي ما لم يُذكر خلاف ذلك. لا يجوز إعادة إنتاجها أو توزيعها دون إذن.",
+      "termsContactTitle": "التواصل",
+      "termsContact": "يمكن إرسال الأسئلة حول هذه الشروط عبر نموذج الاتصال في هذا الموقع."
+    }
+  }
+}
