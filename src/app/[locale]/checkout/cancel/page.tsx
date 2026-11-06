@@ -14,7 +14,7 @@ export default async function CheckoutCancelPage({ params }: Props) {
     <div className="checkout-status">
       <div>
         <h1>{t("cancelTitle")}</h1>
-        <p style={{ color: "var(--white-70)", marginBottom: 32 }}>
+        <p style={{ color: "var(--ink-soft)", marginBottom: 32 }}>
           {t("cancelMessage")}
         </p>
         <Link href="/gallery" className="btn-primary">

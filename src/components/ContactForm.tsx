@@ -39,17 +39,21 @@ export function ContactForm() {
     <div className="contact-form-wrap">
       <form className="contact-form" onSubmit={onSubmit}>
         <div className="form-row">
-          <input name="name" type="text" placeholder={t("name")} required />
-          <input name="email" type="email" placeholder={t("email")} required />
+          <label className="field">
+            <span>{t("name")}</span>
+            <input name="name" type="text" autoComplete="name" required />
+          </label>
+          <label className="field">
+            <span>{t("email")}</span>
+            <input name="email" type="email" autoComplete="email" required />
+          </label>
         </div>
-        <textarea
-          name="message"
-          placeholder={t("message")}
-          rows={5}
-          required
-        />
-        <button type="submit" className="btn-primary" disabled={loading}>
-          {t("send")}
+        <label className="field">
+          <span>{t("message")}</span>
+          <textarea name="message" rows={5} required />
+        </label>
+        <button type="submit" className="btn-pill" disabled={loading}>
+          {loading ? "..." : t("send")}
         </button>
         {status === "ok" && <p className="form-status ok">{t("success")}</p>}
         {status === "err" && <p className="form-status err">{t("error")}</p>}

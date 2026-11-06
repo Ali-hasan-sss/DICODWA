@@ -10,13 +10,27 @@ type Draft = SectionBackground & {
   posterFile?: File | null;
 };
 
-const labels: Record<SectionId, "bgHero" | "bgAbout" | "bgHomeGallery" | "bgContact" | "bgGallery"> = {
+const labels: Record<
+  SectionId,
+  "bgHero" | "bgAbout" | "bgHomeGallery" | "bgContact" | "bgGallery" | "bgDetail"
+> = {
   hero: "bgHero",
   about: "bgAbout",
   homeGallery: "bgHomeGallery",
   contact: "bgContact",
   gallery: "bgGallery",
+  detail: "bgDetail",
 };
+
+function ImageIcon() {
+  return (
+    <svg className="bg-preview-icon" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <rect x="3" y="4" width="18" height="16" rx="3" stroke="currentColor" strokeWidth="1.6" />
+      <circle cx="9" cy="10" r="1.6" fill="currentColor" />
+      <path d="M6 17l4.2-4.2a1 1 0 0 1 1.4 0L17 18" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}
 
 type Props = {
   initialBackgrounds: SectionBackground[];
@@ -92,42 +106,27 @@ export function BackgroundsEditor({ initialBackgrounds }: Props) {
 
   return (
     <form className="admin-form" onSubmit={save}>
-      <h2 style={{ letterSpacing: 2, color: "var(--gold-light)" }}>{t("backgroundsTitle")}</h2>
+      <h2 className="admin-block-title">{t("backgroundsTitle")}</h2>
       <p className="form-status">{t("backgroundsHelp")}</p>
-      {sections.map((section) => (
+      {sections.map((section) => {
+        const preview = section.image || section.poster;
+        return (
         <fieldset key={section.id} className="slide-card">
           <legend>{t(labels[section.id])}</legend>
           {section.id === "hero" ? (
             <p className="form-status">{t("bgHeroNote")}</p>
           ) : (
-            <>
-              {section.video ? (
-                <video
-                  className="hero-admin-preview-video"
-                  src={section.video}
-                  poster={section.poster || section.image || undefined}
-                  muted
-                  playsInline
-                  controls
-                />
-              ) : section.image ? (
-                <img className="hero-admin-preview-video" src={section.image} alt="" />
-              ) : null}
+            <div className="bg-editor-row">
+              <div className="bg-preview">
+                {preview ? (
+                  <img src={preview} alt="" />
+                ) : (
+                  <ImageIcon />
+                )}
+              </div>
+              <div className="bg-fields">
               <label className="admin-file">
-                {t("heroVideo")}
-                <input
-                  type="file"
-                  accept="video/mp4,video/webm,video/quicktime,.mp4,.webm,.mov"
-                  onChange={(e) => update(section.id, { videoFile: e.target.files?.[0] || null })}
-                />
-              </label>
-              <input
-                placeholder={t("heroVideoUrl")}
-                value={section.video}
-                onChange={(e) => update(section.id, { video: e.target.value })}
-              />
-              <label className="admin-file">
-                {t("bgImage")}
+                <span>{t("bgImage")}</span>
                 <input
                   type="file"
                   accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
@@ -135,12 +134,27 @@ export function BackgroundsEditor({ initialBackgrounds }: Props) {
                 />
               </label>
               <input
+                aria-label={t("bgImageUrl")}
                 placeholder={t("bgImageUrl")}
                 value={section.image}
                 onChange={(e) => update(section.id, { image: e.target.value })}
               />
               <label className="admin-file">
-                {t("heroPoster")}
+                <span>{t("heroVideo")}</span>
+                <input
+                  type="file"
+                  accept="video/mp4,video/webm,video/quicktime,.mp4,.webm,.mov"
+                  onChange={(e) => update(section.id, { videoFile: e.target.files?.[0] || null })}
+                />
+              </label>
+              <input
+                aria-label={t("heroVideoUrl")}
+                placeholder={t("heroVideoUrl")}
+                value={section.video}
+                onChange={(e) => update(section.id, { video: e.target.value })}
+              />
+              <label className="admin-file">
+                <span>{t("heroPoster")}</span>
                 <input
                   type="file"
                   accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
@@ -148,11 +162,13 @@ export function BackgroundsEditor({ initialBackgrounds }: Props) {
                 />
               </label>
               <input
+                aria-label={t("heroPosterUrl")}
                 placeholder={t("heroPosterUrl")}
                 value={section.poster}
                 onChange={(e) => update(section.id, { poster: e.target.value })}
               />
-            </>
+              </div>
+            </div>
           )}
           <div className="bg-controls">
             <label>
@@ -176,7 +192,8 @@ export function BackgroundsEditor({ initialBackgrounds }: Props) {
             </label>
           </div>
         </fieldset>
-      ))}
+        );
+      })}
       <button type="submit" className="btn-primary" disabled={saving}>
         {saving ? t("heroUploading") : t("backgroundsSave")}
       </button>

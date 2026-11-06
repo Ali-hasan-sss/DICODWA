@@ -75,7 +75,7 @@ export function SiteCopyEditor({ initialCopy }: Props) {
 
   return (
     <form className="admin-form" onSubmit={save}>
-      <h2 style={{ letterSpacing: 2, color: "var(--gold-light)" }}>{t("textsTitle")}</h2>
+      <h2 className="admin-block-title">{t("textsTitle")}</h2>
       <p className="form-status">{t("textsHelp")}</p>
       <div className="copy-head">
         <span />

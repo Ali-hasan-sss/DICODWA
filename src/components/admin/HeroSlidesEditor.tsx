@@ -103,7 +103,7 @@ export function HeroSlidesEditor({ initialSlides }: Props) {
 
   return (
     <form className="admin-form" onSubmit={save}>
-      <h2 style={{ letterSpacing: 2, color: "var(--gold-light)" }}>{t("heroTitle")}</h2>
+      <h2 className="admin-block-title">{t("heroTitle")}</h2>
       <p className="form-status">{t("heroSlidesHelp")}</p>
       {slides.map((slide, index) => (
         <fieldset key={slide.id} className="slide-card">

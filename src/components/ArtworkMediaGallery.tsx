@@ -107,14 +107,32 @@ export function ArtworkMediaGallery({ media, alt }: Props) {
             aria-label={t("fullscreen")}
             onClick={() => setLightbox(false)}
           >
-            <button
-              type="button"
-              className="media-lightbox-close"
-              onClick={() => setLightbox(false)}
-              aria-label={t("close")}
+            <div
+              className="media-lightbox-stage"
+              onClick={(e) => e.stopPropagation()}
             >
-              <IconClose />
-            </button>
+              {current.type === "video" ? (
+                <video
+                  key={current.src}
+                  src={current.src}
+                  poster={current.poster}
+                  controls
+                  autoPlay
+                  playsInline
+                  className="media-lightbox-media"
+                />
+              ) : (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={current.src}
+                  alt={alt}
+                  className="media-lightbox-media"
+                />
+              )}
+              <p className="media-lightbox-counter">
+                {active + 1} / {count}
+              </p>
+            </div>
 
             {count > 1 && (
               <>
@@ -143,32 +161,14 @@ export function ArtworkMediaGallery({ media, alt }: Props) {
               </>
             )}
 
-            <div
-              className="media-lightbox-stage"
-              onClick={(e) => e.stopPropagation()}
+            <button
+              type="button"
+              className="media-lightbox-close"
+              onClick={() => setLightbox(false)}
+              aria-label={t("close")}
             >
-              {current.type === "video" ? (
-                <video
-                  key={current.src}
-                  src={current.src}
-                  poster={current.poster}
-                  controls
-                  autoPlay
-                  playsInline
-                  className="media-lightbox-media"
-                />
-              ) : (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={current.src}
-                  alt={alt}
-                  className="media-lightbox-media"
-                />
-              )}
-              <p className="media-lightbox-counter">
-                {active + 1} / {count}
-              </p>
-            </div>
+              <IconClose />
+            </button>
           </div>,
           document.body
         )

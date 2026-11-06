@@ -2,10 +2,12 @@
 
 import { FormEvent, useCallback, useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import type { Artwork, ContactMessage, HeroSlide, LocaleCopy, Order, SectionBackground } from "@/lib/types";
+import { Link } from "@/i18n/routing";
+import type { Artwork, ContactMessage, HeroSlide, LocaleCopy, Order, SectionBackground, ShowcaseSection } from "@/lib/types";
 import { buildArtworkMedia, mediaToFormFields } from "@/lib/artwork-media";
 import { BackgroundsEditor } from "@/components/admin/BackgroundsEditor";
 import { HeroSlidesEditor } from "@/components/admin/HeroSlidesEditor";
+import { ShowcaseEditor } from "@/components/admin/ShowcaseEditor";
 import { SiteCopyEditor } from "@/components/admin/SiteCopyEditor";
 
 const emptyForm = {
@@ -34,7 +36,7 @@ export default function AdminPage() {
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
   const [tab, setTab] = useState<
-    "hero" | "backgrounds" | "texts" | "artworks" | "orders" | "messages"
+    "hero" | "backgrounds" | "showcase" | "texts" | "artworks" | "orders" | "messages"
   >("hero");
   const [artworks, setArtworks] = useState<Artwork[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
@@ -43,6 +45,7 @@ export default function AdminPage() {
   const [saving, setSaving] = useState(false);
   const [heroSlides, setHeroSlides] = useState<HeroSlide[]>([]);
   const [backgrounds, setBackgrounds] = useState<SectionBackground[]>([]);
+  const [showcase, setShowcase] = useState<ShowcaseSection | null>(null);
   const [copy, setCopy] = useState<LocaleCopy | null>(null);
 
   const loadData = useCallback(async () => {
@@ -59,6 +62,7 @@ export default function AdminPage() {
     setMessages(data.messages || []);
     setHeroSlides(data.site?.heroSlides || []);
     setBackgrounds(data.site?.backgrounds || []);
+    setShowcase(data.site?.showcase || null);
     setCopy(data.copy || null);
     setLoading(false);
   }, []);
@@ -149,15 +153,48 @@ export default function AdminPage() {
   }
 
   async function removeArtwork(id: string) {
-    if (!confirm("Delete?")) return;
+    if (!confirm(t("confirmDelete"))) return;
     await fetch(`/api/artworks/manage?id=${id}`, { method: "DELETE" });
     await loadData();
   }
 
+  const panels = {
+    hero: { group: t("navHome"), title: t("heroTitle"), hint: t("whereHero") },
+    backgrounds: { group: t("navHome"), title: t("backgroundsTitle"), hint: t("whereBackgrounds") },
+    showcase: { group: t("navHome"), title: t("showcaseTitle"), hint: t("whereShowcase") },
+    texts: { group: t("navHome"), title: t("textsTitle"), hint: t("whereTexts") },
+    artworks: { group: t("navStudio"), title: t("artworks"), hint: t("artworkHelp") },
+    orders: { group: t("navDesk"), title: t("orders"), hint: t("ordersHelp") },
+    messages: { group: t("navDesk"), title: t("messages"), hint: t("messagesHelp") },
+  } as const;
+  const current = panels[tab];
+  const navGroups = [
+    {
+      label: t("navHome"),
+      items: [
+        { id: "hero" as const, label: t("hero") },
+        { id: "backgrounds" as const, label: t("backgrounds") },
+        { id: "showcase" as const, label: t("showcase") },
+        { id: "texts" as const, label: t("texts") },
+      ],
+    },
+    {
+      label: t("navStudio"),
+      items: [{ id: "artworks" as const, label: t("artworks"), count: artworks.length }],
+    },
+    {
+      label: t("navDesk"),
+      items: [
+        { id: "orders" as const, label: t("orders"), count: orders.length },
+        { id: "messages" as const, label: t("messages"), count: messages.length },
+      ],
+    },
+  ];
+
   if (loading) {
     return (
       <div className="admin-page">
-        <p>...</p>
+        <p className="form-status">...</p>
       </div>
     );
   }
@@ -165,18 +202,19 @@ export default function AdminPage() {
   if (!authed) {
     return (
       <div className="admin-page">
-        <div className="admin-card">
-          <h1 className="section-title" style={{ fontSize: 28 }}>
-            {t("login")}
-          </h1>
-          <form className="admin-form" onSubmit={handleLogin}>
-            <input
-              type="password"
-              placeholder={t("password")}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+        <div className="admin-login">
+          <form className="admin-card admin-form" onSubmit={handleLogin}>
+            <p className="admin-kicker">DICODWA</p>
+            <h1>{t("login")}</h1>
+            <label className="admin-field">
+              <span>{t("password")}</span>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </label>
             <button type="submit" className="btn-primary">
               {t("submit")}
             </button>
@@ -189,68 +227,41 @@ export default function AdminPage() {
 
   return (
     <div className="admin-page">
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: 24,
-          flexWrap: "wrap",
-          gap: 16,
-        }}
-      >
-        <h1 className="section-title" style={{ fontSize: 36, margin: 0 }}>
-          {t("title")}
-        </h1>
-        <button type="button" className="btn-primary" onClick={handleLogout}>
-          {t("logout")}
-        </button>
-      </div>
-
-      <div className="admin-tabs">
-        <button
-          type="button"
-          className={tab === "hero" ? "active" : ""}
-          onClick={() => setTab("hero")}
-        >
-          {t("hero")}
-        </button>
-        <button
-          type="button"
-          className={tab === "backgrounds" ? "active" : ""}
-          onClick={() => setTab("backgrounds")}
-        >
-          {t("backgrounds")}
-        </button>
-        <button
-          type="button"
-          className={tab === "texts" ? "active" : ""}
-          onClick={() => setTab("texts")}
-        >
-          {t("texts")}
-        </button>
-        <button
-          type="button"
-          className={tab === "artworks" ? "active" : ""}
-          onClick={() => setTab("artworks")}
-        >
-          {t("artworks")}
-        </button>
-        <button
-          type="button"
-          className={tab === "orders" ? "active" : ""}
-          onClick={() => setTab("orders")}
-        >
-          {t("orders")}
-        </button>
-        <button
-          type="button"
-          className={tab === "messages" ? "active" : ""}
-          onClick={() => setTab("messages")}
-        >
-          {t("messages")}
-        </button>
-      </div>
+      <div className="admin-shell">
+        <aside className="admin-nav">
+          <p className="admin-brand">DICODWA</p>
+          {navGroups.map((group) => (
+            <div key={group.label} className="admin-nav-group">
+              <p className="admin-nav-label">{group.label}</p>
+              {group.items.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  className={tab === item.id ? "active" : ""}
+                  aria-current={tab === item.id ? "page" : undefined}
+                  onClick={() => setTab(item.id)}
+                >
+                  <span>{item.label}</span>
+                  {"count" in item && <span className="admin-count">{item.count}</span>}
+                </button>
+              ))}
+            </div>
+          ))}
+          <div className="admin-nav-actions">
+            <Link href="/" className="btn-primary">
+              {t("viewSite")}
+            </Link>
+            <button type="button" className="btn-primary" onClick={handleLogout}>
+              {t("logout")}
+            </button>
+          </div>
+        </aside>
+        <div className="admin-workspace">
+          <header className="admin-panel-head">
+            <p className="admin-kicker">{current.group}</p>
+            <h1>{current.title}</h1>
+            <p>{current.hint}</p>
+          </header>
 
       {tab === "hero" && heroSlides.length > 0 && (
         <HeroSlidesEditor key={heroSlides.map((slide) => slide.id).join("-")} initialSlides={heroSlides} />
@@ -260,117 +271,151 @@ export default function AdminPage() {
         <BackgroundsEditor initialBackgrounds={backgrounds} />
       )}
 
+      {tab === "showcase" && showcase && (
+        <ShowcaseEditor key={showcase.images.map((image) => image.id).join("-")} initial={showcase} />
+      )}
+
       {tab === "texts" && copy && <SiteCopyEditor key={locale} initialCopy={copy} />}
 
       {tab === "artworks" && (
         <>
-          <form className="admin-form" onSubmit={saveArtwork}>
-            <h2 style={{ letterSpacing: 2, color: "var(--gold-light)" }}>
-              {form.id ? t("edit") : t("add")}
-            </h2>
+          <form id="artwork-form" className="admin-form" onSubmit={saveArtwork}>
+            <h2 className="admin-kicker">{form.id ? t("edit") : t("add")}</h2>
+            {form.image && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img className="admin-cover-preview" src={form.image} alt="" />
+            )}
             <div className="grid-2">
-              <input
-                placeholder={t("titleEn")}
-                value={form.titleEn}
-                onChange={(e) => setForm({ ...form, titleEn: e.target.value })}
-                required
-              />
-              <input
-                placeholder={t("titleAr")}
-                value={form.titleAr}
-                onChange={(e) => setForm({ ...form, titleAr: e.target.value })}
-                required
-              />
+              <label className="admin-field">
+                <span>{t("titleEn")}</span>
+                <input
+                  value={form.titleEn}
+                  onChange={(e) => setForm({ ...form, titleEn: e.target.value })}
+                  required
+                />
+              </label>
+              <label className="admin-field">
+                <span>{t("titleAr")}</span>
+                <input
+                  value={form.titleAr}
+                  onChange={(e) => setForm({ ...form, titleAr: e.target.value })}
+                  required
+                />
+              </label>
             </div>
             <div className="grid-2">
-              <textarea
-                placeholder={t("descEn")}
-                value={form.descEn}
-                onChange={(e) => setForm({ ...form, descEn: e.target.value })}
-                rows={3}
-                required
-              />
-              <textarea
-                placeholder={t("descAr")}
-                value={form.descAr}
-                onChange={(e) => setForm({ ...form, descAr: e.target.value })}
-                rows={3}
-                required
-              />
+              <label className="admin-field">
+                <span>{t("descEn")}</span>
+                <textarea
+                  value={form.descEn}
+                  onChange={(e) => setForm({ ...form, descEn: e.target.value })}
+                  rows={3}
+                  required
+                />
+              </label>
+              <label className="admin-field">
+                <span>{t("descAr")}</span>
+                <textarea
+                  value={form.descAr}
+                  onChange={(e) => setForm({ ...form, descAr: e.target.value })}
+                  rows={3}
+                  required
+                />
+              </label>
             </div>
             <div className="grid-2">
-              <input
-                placeholder={t("price")}
-                type="number"
-                min="1"
-                value={form.price}
-                onChange={(e) => setForm({ ...form, price: e.target.value })}
-                required
-              />
-              <input
-                placeholder={t("image")}
-                value={form.image}
-                onChange={(e) => setForm({ ...form, image: e.target.value })}
-                required
-              />
+              <label className="admin-field">
+                <span>{t("price")}</span>
+                <input
+                  type="number"
+                  min="1"
+                  value={form.price}
+                  onChange={(e) => setForm({ ...form, price: e.target.value })}
+                  required
+                />
+              </label>
+              <label className="admin-field">
+                <span>{t("image")}</span>
+                <input
+                  value={form.image}
+                  onChange={(e) => setForm({ ...form, image: e.target.value })}
+                  required
+                />
+              </label>
             </div>
             <div className="grid-2">
-              <textarea
-                placeholder={t("galleryImages")}
-                value={form.galleryImages}
-                onChange={(e) =>
-                  setForm({ ...form, galleryImages: e.target.value })
-                }
-                rows={3}
-              />
-              <textarea
-                placeholder={t("galleryVideos")}
-                value={form.galleryVideos}
-                onChange={(e) =>
-                  setForm({ ...form, galleryVideos: e.target.value })
-                }
-                rows={3}
-              />
+              <label className="admin-field">
+                <span>{t("galleryImages")}</span>
+                <textarea
+                  value={form.galleryImages}
+                  onChange={(e) =>
+                    setForm({ ...form, galleryImages: e.target.value })
+                  }
+                  rows={3}
+                />
+              </label>
+              <label className="admin-field">
+                <span>{t("galleryVideos")}</span>
+                <textarea
+                  value={form.galleryVideos}
+                  onChange={(e) =>
+                    setForm({ ...form, galleryVideos: e.target.value })
+                  }
+                  rows={3}
+                />
+              </label>
             </div>
             <div className="grid-2">
-              <input
-                placeholder={t("mediumEn")}
-                value={form.mediumEn}
-                onChange={(e) => setForm({ ...form, mediumEn: e.target.value })}
-                required
-              />
-              <input
-                placeholder={t("mediumAr")}
-                value={form.mediumAr}
-                onChange={(e) => setForm({ ...form, mediumAr: e.target.value })}
-                required
-              />
+              <label className="admin-field">
+                <span>{t("mediumEn")}</span>
+                <input
+                  value={form.mediumEn}
+                  onChange={(e) => setForm({ ...form, mediumEn: e.target.value })}
+                  required
+                />
+              </label>
+              <label className="admin-field">
+                <span>{t("mediumAr")}</span>
+                <input
+                  value={form.mediumAr}
+                  onChange={(e) => setForm({ ...form, mediumAr: e.target.value })}
+                  required
+                />
+              </label>
             </div>
             <div className="grid-2">
-              <input
-                placeholder={t("dimensions")}
-                value={form.dimensions}
-                onChange={(e) =>
-                  setForm({ ...form, dimensions: e.target.value })
-                }
-                required
-              />
-              <input
-                placeholder={t("year")}
-                type="number"
-                value={form.year}
-                onChange={(e) => setForm({ ...form, year: e.target.value })}
-              />
+              <label className="admin-field">
+                <span>{t("dimensions")}</span>
+                <input
+                  value={form.dimensions}
+                  onChange={(e) =>
+                    setForm({ ...form, dimensions: e.target.value })
+                  }
+                  required
+                />
+              </label>
+              <label className="admin-field">
+                <span>{t("year")}</span>
+                <input
+                  type="number"
+                  value={form.year}
+                  onChange={(e) => setForm({ ...form, year: e.target.value })}
+                />
+              </label>
             </div>
             <div className="grid-2">
-              <select
-                value={form.status}
-                onChange={(e) => setForm({ ...form, status: e.target.value })}
-              >
-                <option value="available">{t("available")}</option>
-                <option value="sold">{t("sold")}</option>
-              </select>
-              <label style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <label className="admin-field">
+                <span>{t("status")}</span>
+                <select
+                  value={form.status}
+                  onChange={(e) => setForm({ ...form, status: e.target.value })}
+                >
+                  <option value="available">{t("available")}</option>
+                  <option value="sold">{t("sold")}</option>
+                </select>
+              </label>
+              <label className="admin-field" style={{ alignContent: "end" }}>
+                <span>{t("featured")}</span>
                 <input
                   type="checkbox"
                   checked={form.featured}
@@ -378,11 +423,10 @@ export default function AdminPage() {
                     setForm({ ...form, featured: e.target.checked })
                   }
                 />
-                Featured
               </label>
             </div>
             <div style={{ display: "flex", gap: 12 }}>
-              <button type="submit" className="btn-primary" disabled={saving}>
+              <button type="submit" className="btn-primary admin-save" disabled={saving}>
                 {t("save")}
               </button>
               {form.id && (
@@ -397,111 +441,81 @@ export default function AdminPage() {
             </div>
           </form>
 
-          <div style={{ overflowX: "auto" }}>
-            <table className="admin-table">
-              <thead>
-                <tr>
-                  <th>{locale === "ar" ? "العنوان" : "Title"}</th>
-                  <th>{t("price")}</th>
-                  <th>{t("status")}</th>
-                  <th />
-                </tr>
-              </thead>
-              <tbody>
-                {artworks.map((art) => (
-                  <tr key={art.id}>
-                    <td>{locale === "ar" ? art.title.ar : art.title.en}</td>
-                    <td>${art.price}</td>
-                    <td>{art.status}</td>
-                    <td style={{ display: "flex", gap: 8 }}>
-                      <button
-                        type="button"
-                        className="btn-primary"
-                        style={{ padding: "6px 12px", fontSize: 10 }}
-                        onClick={() => editArtwork(art)}
-                      >
-                        {t("edit")}
-                      </button>
-                      <button
-                        type="button"
-                        className="btn-primary"
-                        style={{ padding: "6px 12px", fontSize: 10 }}
-                        onClick={() => removeArtwork(art.id)}
-                      >
-                        {t("delete")}
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <ul className="admin-works">
+            {artworks.map((art) => (
+              <li key={art.id} className="admin-work">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={art.image} alt="" />
+                <div className="admin-work-body">
+                  <h3>{locale === "ar" ? art.title.ar : art.title.en}</h3>
+                  <p>
+                    ${art.price} · {art.status === "sold" ? t("sold") : t("available")}
+                  </p>
+                  <div className="admin-work-actions">
+                    <button type="button" className="btn-primary" onClick={() => editArtwork(art)}>
+                      {t("edit")}
+                    </button>
+                    <button type="button" className="btn-primary" onClick={() => removeArtwork(art.id)}>
+                      {t("delete")}
+                    </button>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
         </>
       )}
 
       {tab === "orders" && (
-        <div style={{ overflowX: "auto" }}>
-          {orders.length === 0 ? (
-            <p className="form-status">{t("noOrders")}</p>
-          ) : (
-            <table className="admin-table">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Artwork</th>
-                  <th>Amount</th>
-                  <th>Email</th>
-                  <th>Status</th>
-                  <th>Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                {orders.map((o) => (
-                  <tr key={o.id}>
-                    <td>{o.id}</td>
-                    <td>{o.artworkTitle}</td>
-                    <td>
-                      ${o.amount} {o.currency}
-                    </td>
-                    <td>{o.customerEmail || "—"}</td>
-                    <td>{o.status}</td>
-                    <td>{new Date(o.createdAt).toLocaleString(locale)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-        </div>
+        orders.length === 0 ? (
+          <p className="form-status">{t("noOrders")}</p>
+        ) : (
+          <div className="admin-records">
+            {orders.map((o) => (
+              <article key={o.id} className="admin-record">
+                <header>
+                  <h3>{o.artworkTitle}</h3>
+                  <time dateTime={o.createdAt}>{new Date(o.createdAt).toLocaleString(locale)}</time>
+                </header>
+                <p>
+                  <strong>{t("amount")}: </strong>${o.amount} {o.currency}
+                  {" · "}
+                  <strong>{t("status")}: </strong>
+                  {o.status}
+                </p>
+                <p>
+                  <strong>{t("customer")}: </strong>
+                  {o.customerEmail || "—"}
+                </p>
+              </article>
+            ))}
+          </div>
+        )
       )}
 
       {tab === "messages" && (
-        <div style={{ overflowX: "auto" }}>
-          {messages.length === 0 ? (
-            <p className="form-status">{t("noMessages")}</p>
-          ) : (
-            <table className="admin-table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Message</th>
-                  <th>Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                {messages.map((m) => (
-                  <tr key={m.id}>
-                    <td>{m.name}</td>
-                    <td>{m.email}</td>
-                    <td style={{ maxWidth: 320 }}>{m.message}</td>
-                    <td>{new Date(m.createdAt).toLocaleString(locale)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-        </div>
+        messages.length === 0 ? (
+          <p className="form-status">{t("noMessages")}</p>
+        ) : (
+          <div className="admin-records">
+            {messages.map((m) => (
+              <article key={m.id} className="admin-record">
+                <header>
+                  <h3>{m.name}</h3>
+                  <time dateTime={m.createdAt}>{new Date(m.createdAt).toLocaleString(locale)}</time>
+                </header>
+                <p>
+                  <strong>{t("email")}: </strong>
+                  {m.email}
+                </p>
+                <p>{m.message}</p>
+              </article>
+            ))}
+          </div>
+        )
       )}
+        </div>
+      </div>
     </div>
   );
 }

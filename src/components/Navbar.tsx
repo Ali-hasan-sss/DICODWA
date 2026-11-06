@@ -43,8 +43,7 @@ export function Navbar() {
     router.replace(pathname, { locale: next });
   };
 
-  const onHome = pathname === "/";
-  const solid = scrolled || !onHome || open;
+  const solid = scrolled || open;
 
   const navItems = [
     { href: "/#home", label: t("home") },
@@ -53,7 +52,7 @@ export function Navbar() {
     { href: "/#contact", label: t("contact") },
   ];
 
-  const langLabel = locale === "en" ? "العربية" : "EN";
+  const langLabel = locale === "en" ? "ar" : "en";
 
   return (
     <header className={`site-nav ${solid ? "solid" : "overlay"}`}>

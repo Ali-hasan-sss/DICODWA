@@ -2,6 +2,7 @@ import { promises as fs } from "fs";
 import path from "path";
 import { normalizeBackgrounds } from "./backgrounds";
 import { normalizeSlides } from "./hero-slides";
+import { normalizeShowcase } from "./showcase";
 import type { Artwork, ContactMessage, Order, SiteSettings } from "./types";
 
 const dataDir = path.join(process.cwd(), "data");
@@ -107,11 +108,17 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     return {
       heroSlides: normalizeSlides(data),
       backgrounds: normalizeBackgrounds(data.backgrounds),
+      showcase: normalizeShowcase(
+        data && typeof data === "object" && "showcase" in data
+          ? (data as { showcase?: unknown }).showcase
+          : undefined
+      ),
     };
   } catch {
     return {
       heroSlides: normalizeSlides(null),
       backgrounds: normalizeBackgrounds(null),
+      showcase: normalizeShowcase(undefined),
     };
   }
 }

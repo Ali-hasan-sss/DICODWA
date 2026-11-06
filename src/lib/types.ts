@@ -69,7 +69,7 @@ export type HeroSlide = {
   buttons: HeroButton[];
 };
 
-export type SectionId = "hero" | "about" | "homeGallery" | "contact" | "gallery";
+export type SectionId = "hero" | "about" | "homeGallery" | "contact" | "gallery" | "detail";
 
 export type SectionBackground = {
   id: SectionId;
@@ -83,9 +83,24 @@ export type SectionBackground = {
   overlayOpacity: number;
 };
 
+export type ShowcaseImage = {
+  id: string;
+  src: string;
+  alt: LocalizedString;
+  caption: LocalizedString;
+};
+
+export type ShowcaseSection = {
+  kicker: LocalizedString;
+  title: LocalizedString;
+  text: LocalizedString;
+  images: ShowcaseImage[];
+};
+
 export type SiteSettings = {
   heroSlides: HeroSlide[];
   backgrounds: SectionBackground[];
+  showcase: ShowcaseSection;
 };
 
 export type MessageTree = {

@@ -137,6 +137,7 @@ export function HeroStage({
       ))}
       <div className="fs-hero-scrim" style={{ background: scrim }} />
       <div className="fs-hero-copy" key={active.id}>
+        <span className="fs-hero-mark" aria-hidden />
         {active.title && <h1 className="fs-hero-title">{active.title}</h1>}
         {active.subtitle && <p className="fs-hero-kicker">{active.subtitle}</p>}
         {active.buttons.length > 0 && (

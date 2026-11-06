@@ -6,7 +6,7 @@
       "poster": "",
       "title": {
         "en": "DICODWA",
-        "ar": "ديكودوا"
+        "ar": "DICODWA"
       },
       "subtitle": {
         "en": "Decorative Pieces & More by DeemaW Ali",
@@ -36,15 +36,15 @@
       "video": "",
       "image": "",
       "poster": "",
-      "overlayColor": "#000000",
-      "overlayOpacity": 72
+      "overlayColor": "#f0cd5a",
+      "overlayOpacity": 50
     },
     {
       "id": "about",
       "video": "",
       "image": "/images/parallax-bg-02.jpg",
       "poster": "",
-      "overlayColor": "#000000",
+      "overlayColor": "#f0cd5a",
       "overlayOpacity": 50
     },
     {
@@ -52,24 +52,88 @@
       "video": "",
       "image": "/images/parallax-bg-04.jpg",
       "poster": "",
-      "overlayColor": "#000000",
-      "overlayOpacity": 62
+      "overlayColor": "#f0cd5a",
+      "overlayOpacity": 50
     },
     {
       "id": "contact",
       "video": "",
       "image": "/images/parallax-bg-05.jpg",
       "poster": "",
-      "overlayColor": "#000000",
-      "overlayOpacity": 55
+      "overlayColor": "#f0cd5a",
+      "overlayOpacity": 50
     },
     {
       "id": "gallery",
       "video": "",
       "image": "/images/parallax-bg-03.jpg",
       "poster": "",
-      "overlayColor": "#000000",
-      "overlayOpacity": 62
+      "overlayColor": "#f0cd5a",
+      "overlayOpacity": 50
     }
-  ]
+  ],
+  "showcase": {
+    "kicker": {
+      "en": "In the studio",
+      "ar": "داخل الاستوديو"
+    },
+    "title": {
+      "en": "Frames",
+      "ar": "لقطات"
+    },
+    "text": {
+      "en": "A closer look at the work, the materials, and the room they were made in.",
+      "ar": "نظرة أقرب على العمل والخامات والمكان الذي صُنع فيه."
+    },
+    "images": [
+      {
+        "id": "frame-studio",
+        "src": "/images/about-01.jpg",
+        "alt": {
+          "en": "Studio",
+          "ar": "الاستوديو"
+        },
+        "caption": {
+          "en": "",
+          "ar": ""
+        }
+      },
+      {
+        "id": "frame-process",
+        "src": "/images/about-02.jpg",
+        "alt": {
+          "en": "Process",
+          "ar": "تفاصيل العمل"
+        },
+        "caption": {
+          "en": "",
+          "ar": ""
+        }
+      },
+      {
+        "id": "frame-light",
+        "src": "/images/parallax-bg-01.jpg",
+        "alt": {
+          "en": "Light",
+          "ar": "الضوء"
+        },
+        "caption": {
+          "en": "",
+          "ar": ""
+        }
+      },
+      {
+        "id": "frame-surface",
+        "src": "/images/parallax-bg-03.jpg",
+        "alt": {
+          "en": "Surface",
+          "ar": "السطح"
+        },
+        "caption": {
+          "en": "",
+          "ar": ""
+        }
+      }
+    ]
+  }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { socialLinks } from "@/lib/social";
 
@@ -46,15 +46,25 @@ function SocialIcon({ id }: { id: (typeof socialLinks)[number]["id"] }) {
 export function Footer() {
   const t = useTranslations("footer");
   const nav = useTranslations("nav");
+  const locale = useLocale();
+  const isAr = locale === "ar";
   const year = new Date().getFullYear();
 
   return (
-    <footer className="site-footer">
+    <footer className="site-footer" dir={isAr ? "rtl" : "ltr"}>
       <div className="footer-grid">
         <div>
-          <p className="footer-col-title">{t("brand")}</p>
-          <p className="script">{t("script")}</p>
-          <p className="footer-brand-note">{t("by")}</p>
+          <p className="footer-col-title footer-brand-name">
+            <bdi>{t("brand")}</bdi>
+          </p>
+          {isAr ? (
+            <p className="footer-brand-note">{t("by")}</p>
+          ) : (
+            <>
+              <p className="script">{t("script")}</p>
+              <p className="footer-brand-note">{t("by")}</p>
+            </>
+          )}
         </div>
 
         <nav className="footer-col" aria-label={nav("home")}>
@@ -104,7 +114,15 @@ export function Footer() {
 
       <div className="footer-bottom">
         <p className="footer-copy">
-          © {year} {t("brand")}. {t("rights")}
+          {isAr ? (
+            <>
+              {t("rights")} <bdi>© {year}</bdi> <bdi>{t("brand")}</bdi>
+            </>
+          ) : (
+            <>
+              © {year} {t("brand")}. {t("rights")}
+            </>
+          )}
         </p>
       </div>
     </footer>

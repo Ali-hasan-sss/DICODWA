@@ -7,6 +7,7 @@ export const SECTION_IDS: SectionId[] = [
   "homeGallery",
   "contact",
   "gallery",
+  "detail",
 ];
 
 const DEFAULTS: Record<SectionId, Pick<SectionBackground, "image" | "overlayOpacity">> = {
@@ -15,6 +16,7 @@ const DEFAULTS: Record<SectionId, Pick<SectionBackground, "image" | "overlayOpac
   homeGallery: { image: "/images/parallax-bg-04.jpg", overlayOpacity: 62 },
   contact: { image: "/images/parallax-bg-05.jpg", overlayOpacity: 55 },
   gallery: { image: "/images/parallax-bg-03.jpg", overlayOpacity: 62 },
+  detail: { image: "/images/parallax-bg-01.jpg", overlayOpacity: 62 },
 };
 
 export function defaultBackgrounds(): SectionBackground[] {

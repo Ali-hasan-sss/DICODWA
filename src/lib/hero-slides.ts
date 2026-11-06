@@ -12,7 +12,7 @@ export function defaultHeroSlides(): HeroSlide[] {
       id: "slide-default",
       video: DEFAULT_HERO_VIDEO,
       poster: "",
-      title: { en: "DICODWA", ar: "ديكودوا" },
+      title: { en: "DICODWA", ar: "DICODWA" },
       subtitle: {
         en: "Decorative Pieces & More by DeemaW Ali",
         ar: "قطع ديكور والمزيد — بإبداع ديما علي",
@@ -35,6 +35,7 @@ export function isSafeMediaUrl(value: string): boolean {
   if (
     value.startsWith("/uploads/hero/") ||
     value.startsWith("/uploads/backgrounds/") ||
+    value.startsWith("/uploads/showcase/") ||
     value.startsWith("/images/")
   ) {
     return !value.includes("..");

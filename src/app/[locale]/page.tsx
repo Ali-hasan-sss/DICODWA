@@ -5,6 +5,7 @@ import { Link } from "@/i18n/routing";
 import { ArtworkGrid } from "@/components/ArtworkGrid";
 import { ContactForm } from "@/components/ContactForm";
 import { HeroStage } from "@/components/HeroStage";
+import { ShowcaseStage } from "@/components/ShowcaseStage";
 import { SectionBackdrop } from "@/components/SectionBackdrop";
 import { heroScrim } from "@/lib/backgrounds";
 import { getArtworks, getSiteSettings } from "@/lib/store";
@@ -94,69 +95,100 @@ export default async function HomePage({ params }: Props) {
         scrim={heroScrim(sectionBackground(site.backgrounds, "hero"))}
       />
 
-      <section id="about" className="parallax-section home-block" data-motion="about">
+      <section id="about" className="parallax-section home-block home-about" data-motion="about">
         <SectionBackdrop background={sectionBackground(site.backgrounds, "about")} speed="0.45" />
         <div className="section-content">
-          <h2 className="section-title" data-reveal="title" data-delay="0">
-            {t("about.title")}
-          </h2>
-          <div className="about-cols">
-            <div className="about-col" data-reveal="slide-start" data-delay="1">
-              <div className="about-thumb-wide">
+          <div className="about-stage">
+            <div className="about-mosaic" data-reveal="slide-start" data-delay="1">
+              <div className="about-shot about-shot-main">
                 <Image
                   src="/images/about-01.jpg"
                   alt={t("about.alt1")}
-                  width={400}
-                  height={200}
+                  fill
+                  sizes="(max-width: 900px) 62vw, 38vw"
                 />
               </div>
-              <p>{t("about.p1")}</p>
-              <p>{t("about.p2")}</p>
-            </div>
-            <div className="about-col" data-reveal="slide-end" data-delay="2">
-              <div className="about-thumb-wide">
+              <div className="about-shot about-shot-accent">
                 <Image
                   src="/images/about-02.jpg"
                   alt={t("about.alt2")}
-                  width={400}
-                  height={200}
+                  fill
+                  sizes="(max-width: 900px) 34vw, 22vw"
                 />
               </div>
-              <p>{t("about.p3")}</p>
+            </div>
+            <div className="about-copy">
+              <p className="eyebrow" data-reveal="fade-up" data-delay="1">
+                {t("about.kicker")}
+              </p>
+              <h2 className="section-title" data-reveal="title" data-delay="0">
+                {t("about.title")}
+              </h2>
+              <div className="about-prose" data-reveal="fade-up" data-delay="2">
+                <p>{t("about.p1")}</p>
+                <p>{t("about.p2")}</p>
+                <p>{t("about.p3")}</p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="gallery" className="parallax-section home-block" data-motion="gallery">
+      {site.showcase.images.length > 0 && (
+        <ShowcaseStage
+          kicker={site.showcase.kicker[lang]}
+          title={site.showcase.title[lang]}
+          text={site.showcase.text[lang]}
+          images={site.showcase.images.map((image) => ({
+            id: image.id,
+            src: image.src,
+            alt: image.alt[lang],
+            caption: image.caption[lang],
+          }))}
+        />
+      )}
+
+      <section id="gallery" className="parallax-section home-block home-gallery" data-motion="gallery">
         <SectionBackdrop background={sectionBackground(site.backgrounds, "homeGallery")} />
         <div className="section-content">
-          <h2 className="section-title" data-reveal="title" data-delay="0">
-            {t("gallery.title")}
-          </h2>
-          <p className="section-subtitle" data-reveal="fade-up" data-delay="1">
-            {t("gallery.subtitle")}
-          </p>
-          <ArtworkGrid artworks={featured} limit={6} />
-          <div style={{ marginTop: 40 }} data-reveal="fade-up" data-delay="4">
-            <Link href="/gallery" className="btn-pill">
+          <div className="home-head">
+            <div>
+              <p className="eyebrow" data-reveal="fade-up" data-delay="1">
+                {t("gallery.kicker")}
+              </p>
+              <h2 className="section-title" data-reveal="title" data-delay="0">
+                {t("gallery.title")}
+              </h2>
+              <p className="section-lead" data-reveal="fade-up" data-delay="2">
+                {t("gallery.subtitle")}
+              </p>
+            </div>
+            <Link href="/gallery" className="btn-pill home-head-link" data-reveal="fade-up" data-delay="2">
               {t("gallery.viewAll")}
             </Link>
           </div>
+          <ArtworkGrid artworks={featured} limit={6} layout="editorial" />
         </div>
       </section>
 
-      <section id="contact" className="parallax-section home-block" data-motion="contact">
+      <section id="contact" className="parallax-section home-block home-contact" data-motion="contact">
         <SectionBackdrop background={sectionBackground(site.backgrounds, "contact")} />
         <div className="section-content">
-          <h2 className="section-title" data-reveal="title" data-delay="0">
-            {t("contact.title")}
-          </h2>
-          <p className="section-subtitle" data-reveal="fade-up" data-delay="1">
-            {t("contact.subtitle")}
-          </p>
-          <div data-reveal="rise" data-delay="2">
-            <ContactForm />
+          <div className="contact-stage">
+            <div className="contact-intro">
+              <p className="eyebrow" data-reveal="fade-up" data-delay="1">
+                {t("contact.kicker")}
+              </p>
+              <h2 className="section-title" data-reveal="title" data-delay="0">
+                {t("contact.title")}
+              </h2>
+              <p className="section-lead" data-reveal="fade-up" data-delay="2">
+                {t("contact.subtitle")}
+              </p>
+            </div>
+            <div data-reveal="rise" data-delay="2">
+              <ContactForm />
+            </div>
           </div>
         </div>
       </section>
